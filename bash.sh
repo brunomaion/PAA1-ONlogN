@@ -13,7 +13,7 @@ else
   echo "Compilation failed."
 fi
 
-for i in {1..1}; do
+for i in {1..6}; do
   for file in entradas/*; do
     if [ -f "$file" ]; then
       echo ""
