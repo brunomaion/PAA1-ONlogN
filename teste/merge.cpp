@@ -91,9 +91,14 @@ int main(int argc, char* argv[]) {
   // Inicia a medição de tempo
   auto start = std::chrono::high_resolution_clock::now();
   ///////////////////////////////////////////////////////
+
+
   
   int* arr = numbers.data();
   MergeSort(arr, 0, numbers.size() - 1);
+
+
+
   
   ///////////////////////////////////////////////////////
   // Finaliza a medição de tempo
@@ -101,11 +106,12 @@ int main(int argc, char* argv[]) {
   std::chrono::duration<double> duration = end - start;
   std::cout << "Tempo " << duration.count() << " segundos" << std::endl;
 
-  /*/ Output the numbers to verify
+  // Output the numbers to verify
   for (int num : numbers) {
-    std::cout << num << "\n";
+    std::cout << num << " ";
   }
-  /*/
+  std::cout << "\n";
+  //
 
   // ESCREVE CSV
   std::ofstream outfile("output.csv", std::ios::app);
