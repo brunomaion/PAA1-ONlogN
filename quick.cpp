@@ -1,55 +1,100 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <fstream>
 
-// Declaração da função partition
-int partition(std::vector<int>& arr, int low, int high);
+void QuickSort(int *Vet, int left, int right) {
+    int i = left, j = right;
+    int pivo = Vet[(left + right) / 2];
+    int y;
 
-void quicksort(std::vector<int>& arr, int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quicksort(arr, low, pi - 1);
-        quicksort(arr, pi + 1, high);
-    }
-}
-
-void printArray(const std::vector<int>& arr) {
-    for (int num : arr) {
-        std::cout << num << " ";
-    }
-    std::cout << std::endl;
-}
-
-// Definição da função partition
-int partition(std::vector<int>& arr, int low, int high) {
-    int pivot = arr[high];
-    int i = (low - 1);
-    for (int j = low; j <= high - 1; j++) {
-        if (arr[j] < pivot) {
+    // Loop principal do QuickSort
+    while (i <= j) {
+        // Encontra o próximo elemento à esquerda que deve ser trocado
+        while (Vet[i] < pivo && i < right) {
             i++;
-            std::swap(arr[i], arr[j]);
+        }
+        // Encontra o próximo elemento à direita que deve ser trocado
+        while (Vet[j] > pivo && j > left) {
+            j--;
+        }
+        // Troca os elementos e ajusta os índices
+        if (i <= j) {
+            y = Vet[i];
+            Vet[i] = Vet[j];
+            Vet[j] = y;
+            i++;
+            j--;
         }
     }
-    std::swap(arr[i + 1], arr[high]);
-    return (i + 1);
+
+    // Chamada recursiva para a sublista à esquerda
+    if (j > left) {
+        QuickSort(Vet, left, j);
+    }
+
+    // Chamada recursiva para a sublista à direita
+    if (i < right) {
+        QuickSort(Vet, i, right);
+    }
 }
 
-int main() {
-    std::vector<int> arr = {10, 7, 8, 9, 1, 5, 10, 7, 8, 9, 1, 5 ,12, 44,44,53,54,45,45};
-    int n = arr.size();
 
-    // Inicia a medição de tempo
-    auto start = std::chrono::high_resolution_clock::now();
+int main(int argc, char* argv[]) {
 
-    quicksort(arr, 0, n - 1);
+  std::string string_entrada = argv[1];
 
-    // Finaliza a medição de tempo
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> duration = end - start;
+  size_t pos = string_entrada.find("entradas/");
+  if (pos != std::string::npos) {
+    string_entrada.erase(pos, 9); // 9 is the length of "entradas/"
+  }
 
-    std::cout << "Sorted array: ";
-    printArray(arr);
-    std::cout << "Execution time: " << duration.count() << " seconds" << std::endl;
+  pos = string_entrada.find(".txt");
+  if (pos != std::string::npos) {
+    string_entrada.erase(pos, 4); // 4 is the length of ".txt"
+  }
 
-    return 0;
+  //LE DENTRO TXT
+  std::string file_path = argv[1];
+  std::ifstream file(file_path);
+  std::vector<int> numbers;
+  int number;
+  while (file >> number) {
+    numbers.push_back(number);
+  }
+  file.close();
+
+
+  std::cout << "QuickSort: " << string_entrada << " Execução: " << argv[2] << std::endl;
+  // Inicia a medição de tempo
+  auto start = std::chrono::high_resolution_clock::now();
+  ///////////////////////////////////////////////////////
+
+
+  
+  int* arr = numbers.data();
+  QuickSort(arr, 0, numbers.size() - 1);
+
+
+
+  
+  ///////////////////////////////////////////////////////
+  // Finaliza a medição de tempo
+  auto end = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> duration = end - start;
+  std::cout << "Tempo " << duration.count() << " segundos" << std::endl;
+
+  /*/ Output the numbers to verify
+  for (int num : numbers) {
+    std::cout << num << " ";
+  }
+  std::cout << "\n";
+  /*/
+
+  // ESCREVE CSV
+  std::ofstream outfile("output.csv", std::ios::app);
+  outfile << "QUICKSORT" << ";" << string_entrada << ";" << duration.count() << ";" << argv[2] << std::endl;
+  outfile.close();
+
+  return 0;
 }

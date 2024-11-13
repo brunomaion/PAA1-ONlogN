@@ -4,6 +4,8 @@
 
 g++ -o init init.cpp
 g++ -o merge merge.cpp
+g++ -o quick quick.cpp
+g++ -o heap heap.cpp
 
 if [ $? -eq 0 ]; then
   ./init
@@ -16,6 +18,10 @@ for i in {1..1}; do
     if [ -f "$file" ]; then
       echo ""
       ./merge "$file" "$i"
+      echo ""
+      ./quick "$file" "$i"
+      echo ""
+      ./heap "$file" "$i"
     fi
   done
 done

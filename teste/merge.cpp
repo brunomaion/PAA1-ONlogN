@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
   file.close();
 
 
-  std::cout << "Quicksort: " << string_entrada << " Execução: " << argv[2] << std::endl;
+  std::cout << "MergeSort: " << string_entrada << " Execução: " << argv[2] << std::endl;
   // Inicia a medição de tempo
   auto start = std::chrono::high_resolution_clock::now();
   ///////////////////////////////////////////////////////

@@ -3,41 +3,39 @@
 #include <chrono>
 #include <fstream>
 
-void heapify(int *Vet, int n, int i) {
-    int largest = i;          // Inicializa o maior como a raiz
-    int left = 2 * i + 1;      // Filho à esquerda
-    int right = 2 * i + 2;     // Filho à direita
+void QuickSort(int *Vet, int left, int right) {
+    int i = left, j = right;
+    int pivo = Vet[(left + right) / 2];
+    int y;
 
-    // Se o filho à esquerda é maior que a raiz
-    if (left < n && Vet[left] > Vet[largest]) {
-        largest = left;
+    // Loop principal do QuickSort
+    while (i <= j) {
+        // Encontra o próximo elemento à esquerda que deve ser trocado
+        while (Vet[i] < pivo && i < right) {
+            i++;
+        }
+        // Encontra o próximo elemento à direita que deve ser trocado
+        while (Vet[j] > pivo && j > left) {
+            j--;
+        }
+        // Troca os elementos e ajusta os índices
+        if (i <= j) {
+            y = Vet[i];
+            Vet[i] = Vet[j];
+            Vet[j] = y;
+            i++;
+            j--;
+        }
     }
 
-    // Se o filho à direita é maior que o maior atual
-    if (right < n && Vet[right] > Vet[largest]) {
-        largest = right;
+    // Chamada recursiva para a sublista à esquerda
+    if (j > left) {
+        QuickSort(Vet, left, j);
     }
 
-    // Se o maior não é a raiz
-    if (largest != i) {
-        std::swap(Vet[i], Vet[largest]);
-        // Recursivamente ajusta o sub-heap afetado
-        heapify(Vet, n, largest);
-    }
-}
-
-void heapSort(int *Vet, int n) {
-    // Constrói o heap (reorganiza o array)
-    for (int i = n / 2 - 1; i >= 0; i--) {
-        heapify(Vet, n, i);
-    }
-
-    // Extrai elementos do heap um por um
-    for (int i = n - 1; i > 0; i--) {
-        // Move a raiz atual para o fim
-        std::swap(Vet[0], Vet[i]);
-        // Chama heapify no heap reduzido
-        heapify(Vet, i, 0);
+    // Chamada recursiva para a sublista à direita
+    if (i < right) {
+        QuickSort(Vet, i, right);
     }
 }
 
@@ -67,7 +65,7 @@ int main(int argc, char* argv[]) {
   file.close();
 
 
-  std::cout << "HeapSort: " << string_entrada << " Execução: " << argv[2] << std::endl;
+  std::cout << "QuickSort: " << string_entrada << " Execução: " << argv[2] << std::endl;
   // Inicia a medição de tempo
   auto start = std::chrono::high_resolution_clock::now();
   ///////////////////////////////////////////////////////
@@ -75,7 +73,7 @@ int main(int argc, char* argv[]) {
 
   
   int* arr = numbers.data();
-  heapSort(arr, numbers.size());
+  QuickSort(arr, 0, numbers.size() - 1);
 
 
 
@@ -86,16 +84,16 @@ int main(int argc, char* argv[]) {
   std::chrono::duration<double> duration = end - start;
   std::cout << "Tempo " << duration.count() << " segundos" << std::endl;
 
-  /*/ Output the numbers to verify
+  // Output the numbers to verify
   for (int num : numbers) {
     std::cout << num << " ";
   }
   std::cout << "\n";
-  /*/
+  //
 
   // ESCREVE CSV
   std::ofstream outfile("output.csv", std::ios::app);
-  outfile << "HEAPSORT" << ";" << string_entrada << ";" << duration.count() << ";" << argv[2] << std::endl;
+  outfile << "QUICKSORT" << ";" << string_entrada << ";" << duration.count() << ";" << argv[2] << std::endl;
   outfile.close();
 
   return 0;
