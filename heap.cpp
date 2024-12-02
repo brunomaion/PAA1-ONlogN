@@ -9,18 +9,18 @@ void heapify(int *Vet, int n, int i) {
     int right = 2 * i + 2;     // Filho à direita
 
     // Se o filho à esquerda é maior que a raiz
-    if (left < n && Vet[left] > Vet[largest]) {
-        largest = left;
+    if (left < n && Vet[left] > Vet[largest]) {  //5
+        largest = left; //1
     }
 
     // Se o filho à direita é maior que o maior atual
-    if (right < n && Vet[right] > Vet[largest]) {
-        largest = right;
+    if (right < n && Vet[right] > Vet[largest]) {  //5
+        largest = right; //1
     }
 
     // Se o maior não é a raiz
-    if (largest != i) {
-        std::swap(Vet[i], Vet[largest]);
+    if (largest != i) {  //1
+        std::swap(Vet[i], Vet[largest]); //usando aux  ==6
         // Recursivamente ajusta o sub-heap afetado
         heapify(Vet, n, largest);
     }
@@ -35,7 +35,7 @@ void heapSort(int *Vet, int n) {
     // Extrai elementos do heap um por um
     for (int i = n - 1; i > 0; i--) {
         // Move a raiz atual para o fim
-        std::swap(Vet[0], Vet[i]);
+        std::swap(Vet[0], Vet[i]);//usando aux  ==6
         // Chama heapify no heap reduzido
         heapify(Vet, i, 0);
     }

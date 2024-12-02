@@ -16,37 +16,39 @@ void merge(int *Vet, int comeco, int meio, int fim) {
     int *direita = new int[n2];
 
     // Copia os dados para os vetores temporários
-    for (i = 0; i < n1; i++)
-        esquerda[i] = Vet[comeco + i];
-    for (j = 0; j < n2; j++)
-        direita[j] = Vet[meio + 1 + j];
+    for (i = 0; i < n1; i++)//2n+2
+        esquerda[i] = Vet[comeco + i]; //4n
+    for (j = 0; j < n2; j++) //2n+2
+        direita[j] = Vet[meio + 1 + j]; //5n
 
     // Mescla os vetores temporários de volta no vetor original
-    i = 0;
-    j = 0;
-    k = comeco;
-    while (i < n1 && j < n2) {
-        if (esquerda[i] <= direita[j]) {
-            Vet[k] = esquerda[i];
-            i++;
+    i = 0; //1
+    j = 0; //1
+    k = comeco; //1
+    while (i < n1 && j < n2) { //2n+4
+        if (esquerda[i] <= direita[j]) { //3n
+            Vet[k] = esquerda[i]; //3n
+            i++; //1n
         } else {
-            Vet[k] = direita[j];
-            j++;
+            Vet[k] = direita[j];//3n
+            j++;//1n
         }
-        k++;
+        k++;//1n
     }
 
     // Copia os elementos restantes, se houver
-    while (i < n1) {
-        Vet[k] = esquerda[i];
-        i++;
-        k++;
+    while (i < n1) { //2n+2
+        Vet[k] = esquerda[i]; //3n
+        i++; // 1n
+        k++; // 1n
     }
-    while (j < n2) {
-        Vet[k] = direita[j];
-        j++;
-        k++;
+    while (j < n2) { //2n+2
+        Vet[k] = direita[j]; //3n
+        j++; // 1n
+        k++; // 1n
     }
+
+    //37n + 11
 
     // Libera a memória alocada para os vetores temporários
     delete[] esquerda;

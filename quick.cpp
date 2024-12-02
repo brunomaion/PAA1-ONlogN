@@ -15,26 +15,27 @@ void QuickSort(int *Vet, int left, int right) {
             i++;
         }
         // Encontra o próximo elemento à direita que deve ser trocado
-        while (Vet[j] > pivo && j > left) {
-            j--;
+        while (Vet[j] > pivo && j > left) { //4n
+            j--; //1n
         }
         // Troca os elementos e ajusta os índices
-        if (i <= j) {
-            y = Vet[i];
-            Vet[i] = Vet[j];
-            Vet[j] = y;
-            i++;
-            j--;
+        if (i <= j) { //1n
+            y = Vet[i]; //2n
+            Vet[i] = Vet[j]; //3n
+            Vet[j] = y; //2n
+            i++; //1n
+            j--; //1n
         }
     }
 
-    // Chamada recursiva para a sublista à esquerda
-    if (j > left) {
+    //10n + 
+
+    if (j > left) { // 1
         QuickSort(Vet, left, j);
     }
 
     // Chamada recursiva para a sublista à direita
-    if (i < right) {
+    if (i < right) { //1
         QuickSort(Vet, i, right);
     }
 }
