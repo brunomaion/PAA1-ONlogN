@@ -1,4 +1,4 @@
 # Trabalhho PAA O(NlogN) 
 ## MERGESORT QUICKSORT HEAPSORT
 
-[embed] https://github.com/brunomaion/PAA1-ONlogN/blob/main/_Relatorio1PAA_MaionNeresHoffman.pdf [/embed]
+[_Relatorio1PAA_MaionNeresHoffman.pdf](https://github.com/user-attachments/files/18086183/_Relatorio1PAA_MaionNeresHoffman.pdf)
